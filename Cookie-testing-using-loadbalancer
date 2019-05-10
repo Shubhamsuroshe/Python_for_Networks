@@ -1,0 +1,43 @@
+import requests
+
+myList = []
+myCookies = []
+myNewCookies = []
+file = input("Enter the Path : ")
+
+with open(file, 'r') as FileRead:
+    myList = FileRead.read().splitlines()
+print("Urls in List :\n", myList)
+print("--------------------------------------------------------------------------------------------------------------------------")
+#import pdb; pdb.set_trace()
+urlLength = len(myList)
+count=0
+j=0
+
+for i in range(urlLength):
+    try:
+        r = requests.get(myList[i])
+        print("status code : ",r.status_code)
+        myCookies.append(r.cookies)
+        print("url : " , myList[i], "\n Cookies " , myCookies[i])
+        print("---------------------------------------------------------------------------------------------------------------------")
+    except:
+        print("Bad Url ")
+
+cookiesLength = len(myCookies)
+
+for k in range(cookiesLength):
+    try:
+        for j in range(cookiesLength):
+            print(j)
+            r1 = requests.get(myList[count] , cookies=myCookies[j])
+            print("Selected Url" ,myList[count])
+            print("status code : ",r1.status_code)
+            #myNewCookies.append(r.cookies)
+            print("old : " , myCookies[j])
+            print("new :" , r1.cookies)
+            print("=============================================================================================================================")
+        count = count+1
+    except:
+        print("Not Working")
+print("Done")
