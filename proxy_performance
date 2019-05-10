@@ -1,0 +1,30 @@
+import requests
+from multiprocessing import Pool
+
+
+myList = []
+
+
+file = input("Enter the path")
+import pdb; pdb.set_trace()
+with open(file, 'r') as FileRead:
+    myList = FileRead.read().splitlines()
+print(myList)
+length = len(myList)
+
+ 
+
+def thread_1(x):
+    for i in range(length):
+        try:
+            r = requests.get(myList[i] , timeout=10)
+            print(r.status_code)
+        except:
+            print("Bad Url")
+
+       
+if __name__ == '__main__':
+    p=Pool(1)
+    x=range(1)
+    a=(p.map(thread_1,x))
+    print(len(a)
