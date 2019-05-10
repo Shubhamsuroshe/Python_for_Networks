@@ -1,0 +1,39 @@
+import requests
+import time
+import _thread
+
+myList = []
+
+
+file = input("Enter the path")
+#import pdb; pdb.set_trace()
+with open(file, 'r') as FileRead:
+    myList = FileRead.read().splitlines()
+print(myList)
+length = len(myList)
+
+myTuple = tuple(myList)
+
+
+def req(url):
+    for i in range(length):
+        try:
+            r = requests.get(url , timeout=1 )
+            r.elapsed.total_seconds()
+            print(r.status_code)
+            print(r.elapsed)
+           
+            
+        except:
+            print("Bad Url")    
+
+for i in range(1000):
+    try:
+        j=0
+        _thread.start_new_thread(req,(myTuple[j],))
+        j=j+1
+        _thread.start_new_thread(req,(myTuple[j],))
+        j=j+1
+        _thread.start_new_thread(req,(myTuple[j],))
+    except:
+        print ("Error: unable to start thread")
